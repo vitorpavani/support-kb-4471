@@ -1,0 +1,55 @@
+---
+layout: runbook
+title: '#4471 split: three problems, three tickets'
+owner: vitorpavani
+status: proposed
+reviewed: 2026-10-28
+signature: v1.eyJzdWIiOiI2MjkiLCJhdWQiOiJjaGFsbGVuZ2U6d2hhdC1pdC1zaG93cyIsImlhdCI6MTc5MzIyMDc1NywiZXhwIjoxNzkzMzA3MTU3fQ.ZfzVIIX55D9wbM0zpxP5fROVl1nSW9-nVcF7K_y5eqQ
+---
+
+<script>
+  import SplitTable from '#lib/kb/SplitTable.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+[#4471](/kb/incidents/4471) is marked known: one issue, one fix queued. It is not one issue.
+The reports were merged because their subjects matched ([decision 0001](/kb/decisions/0001-dedupe-by-subject)),
+not because they share a cause. Read by cause, they hold three problems, and the queued parser fix
+closes only one of them.
+
+<SplitTable ticket={4471} filed={{ parser: 1, hint: 2, 'one-day': 3 }} />
+
+<Callout kind="warn">
+Fixing the parser will not close #4471. The <code>hint</code> and <code>one-day</code> reports stay open until their own fixes ship.
+</Callout>
+
+## The three problems
+
+- **`parser`** ([#1](https://github.com/vitorpavani/support-kb-4471/issues/1)): the shared parser reads
+  dates month first, and every tenant on file writes the day first. Day and month swap: 7 April shows as 4 July.
+- **`hint`** ([#2](https://github.com/vitorpavani/support-kb-4471/issues/2)): the booking-v3 form prints
+  `MM/DD/YYYY` under its date field. People type the month first as told, and the form reads the date
+  day first. These are form reports from booking-v3 tenants only, and they need a form fix, not a parser fix.
+- **`one-day`** ([#3](https://github.com/vitorpavani/support-kb-4471/issues/3)): the date moves by one day
+  and is not swapped ("Client in Lisbon got Tuesday. Client in Toronto got Monday."). The desk had already
+  noted these in `desk-notes.json`. That looks like a time zone conversion, so it needs a fix of its own.
+
+## How the reports were counted
+
+- **One id, one report.** The export repeats some rows because its pages overlap, so each report is counted once.
+- **By tenant, not by intake tag.** The intake tag is a guess from the reporter's browser. The cause
+  depends on the tenant's locale and booking form (`causes.ts`). The table shows how often the tag was wrong.
+- **By what the report says.** The one-day moves are the only reports with no swapped day and month.
+  The desk's notes flag them, and reading every report body confirms it.
+
+The counts come from `src/lib/kb/split.ts`, which runs at render time. When the desk merges more
+reports into #4471, the table updates.
+
+## For the desk
+
+- Do not close #4471 when the parser fix ships. Re-run this page first.
+- Matching on subject merged three bugs into one ticket. Decision 0001 stays as it is, because
+  accepted decisions are never edited, but it needs a new record that dedupes by cause.
+
+<RenderStamp {signature} />

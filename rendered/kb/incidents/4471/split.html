@@ -1,0 +1,29 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<!--e2jw2j--><!----><title>#4471 split: three problems, three tickets · support kb</title>
+		<link href="../../../_app/immutable/assets/runbook.COyw0cbZ.css" rel="stylesheet">
+		<link href="../../../_app/immutable/assets/Callout.AbLv9dM_.css" rel="stylesheet">
+		<link href="../../../_app/immutable/assets/_page.Cw063NKv.css" rel="stylesheet"></head><body><div><!--[--><!--[0--><!--[--><!--[--><div class="kb svelte-e2jw2j"><header><a class="crumb svelte-e2jw2j" href="/kb">support desk · kb</a> <h1 class="svelte-e2jw2j">#4471 split: three problems, three tickets</h1> <p class="meta svelte-e2jw2j"><span>owner <b>vitorpavani</b></span> <span class="status proposed svelte-e2jw2j">proposed</span> <span class="svelte-e2jw2j">reviewed 2026-10-28 · 0 days ago</span></p></header> <!--[-1--><!--]--> <main><p><a href="/kb/incidents/4471">#4471</a> is marked known: one issue, one fix queued. It is not one issue.
+The reports were merged because their subjects matched (<a href="/kb/decisions/0001-dedupe-by-subject">decision 0001</a>),
+not because they share a cause. Read by cause, they hold three problems, and the queued parser fix
+closes only one of them.</p> <p class="sum svelte-xskqqx"><strong>412</strong> reports in #4471 (427 rows in the export, 15 repeated) · <strong>3</strong> problems</p> <table><thead><tr><th>problem</th><th>reports</th><th>tenants</th><th>seen</th><th>intake tag wrong</th><th>ticket</th></tr></thead><tbody><!--[--><tr><td><code>parser</code></td><td><strong>374</strong></td><td>11</td><td>2026-04-01 → 2026-10-04</td><td>23</td><td><!--[0--><a href="https://github.com/vitorpavani/support-kb-4471/issues/1">#1</a><!--]--></td></tr><tr><td><code>hint</code></td><td><strong>33</strong></td><td>3</td><td>2026-04-17 → 2026-09-22</td><td>15</td><td><!--[0--><a href="https://github.com/vitorpavani/support-kb-4471/issues/2">#2</a><!--]--></td></tr><tr><td><code>one-day</code></td><td><strong>5</strong></td><td>5</td><td>2026-04-02 → 2026-10-04</td><td>—</td><td><!--[0--><a href="https://github.com/vitorpavani/support-kb-4471/issues/3">#3</a><!--]--></td></tr><!--]--></tbody></table><!----> <aside class="warn svelte-17bri61"><!---->Fixing the parser will not close #4471. The <code>hint</code> and <code>one-day</code> reports stay open until their own fixes ship.<!----></aside><!----> <h2>The three problems</h2> <ul><li><strong><code>parser</code></strong> (<a href="https://github.com/vitorpavani/support-kb-4471/issues/1" rel="nofollow">#1</a>): the shared parser reads
+dates month first, and every tenant on file writes the day first. Day and month swap: 7 April shows as 4 July.</li> <li><strong><code>hint</code></strong> (<a href="https://github.com/vitorpavani/support-kb-4471/issues/2" rel="nofollow">#2</a>): the booking-v3 form prints <code>MM/DD/YYYY</code> under its date field. People type the month first as told, and the form reads the date
+day first. These are form reports from booking-v3 tenants only, and they need a form fix, not a parser fix.</li> <li><strong><code>one-day</code></strong> (<a href="https://github.com/vitorpavani/support-kb-4471/issues/3" rel="nofollow">#3</a>): the date moves by one day
+and is not swapped (“Client in Lisbon got Tuesday. Client in Toronto got Monday.”). The desk had already
+noted these in <code>desk-notes.json</code>. That looks like a time zone conversion, so it needs a fix of its own.</li></ul> <h2>How the reports were counted</h2> <ul><li><strong>One id, one report.</strong> The export repeats some rows because its pages overlap, so each report is counted once.</li> <li><strong>By tenant, not by intake tag.</strong> The intake tag is a guess from the reporter’s browser. The cause
+depends on the tenant’s locale and booking form (<code>causes.ts</code>). The table shows how often the tag was wrong.</li> <li><strong>By what the report says.</strong> The one-day moves are the only reports with no swapped day and month.
+The desk’s notes flag them, and reading every report body confirms it.</li></ul> <p>The counts come from <code>src/lib/kb/split.ts</code>, which runs at render time. When the desk merges more
+reports into #4471, the table updates.</p> <h2>For the desk</h2> <ul><li>Do not close #4471 when the parser fix ships. Re-run this page first.</li> <li>Matching on subject merged three bugs into one ticket. Decision 0001 stays as it is, because
+accepted decisions are never edited, but it needs a new record that dedupes by cause.</li></ul> <!--[0--><p class="stamp svelte-1280m42">desk ref <b class="svelte-1280m42">DR-ASV4-AF8H</b></p><!--]--><!----><!----></main> <footer class="svelte-e2jw2j">Pages are written by people. Tables and charts are built from data at render time.</footer></div><!--]--><!----><!--]--><!--]--> <!--[-1--><!--]--><!--]-->
+			
+			
+		</div></body></html>
