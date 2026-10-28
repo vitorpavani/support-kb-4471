@@ -1,0 +1,37 @@
+---
+layout: runbook
+title: '0002 · Duplicates share a cause'
+owner: vitorpavani
+status: proposed
+reviewed: 2026-10-28
+signature: v1.eyJzdWIiOiI2MjkiLCJhdWQiOiJjaGFsbGVuZ2U6d2hhdC1pdC1zaG93cyIsImlhdCI6MTc5MzIyMDc1NywiZXhwIjoxNzkzMzA3MTU3fQ.ZfzVIIX55D9wbM0zpxP5fROVl1nSW9-nVcF7K_y5eqQ
+---
+
+<script>
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+**Date:** 28 October 2026 · **Replaces:** [0001 · Duplicates share a subject line](/kb/decisions/0001-dedupe-by-subject)
+
+## Context
+
+Decision 0001 merged reports whose subject lines matched. #4471 shows what that costs: the desk merged reports
+from three different bugs into one ticket marked known, with one fix queued
+([#4471 split](/kb/incidents/4471/split)). Reporters at different tenants use the same subject for different
+bugs, and the same bug arrives under different subjects.
+
+## Decision
+
+Two reports are the same issue when they share a **cause**, not a subject line. The cause comes from the
+tenant (its locale and booking form) and the channel, as `causeOf()` in `src/lib/kb/causes.ts` computes it.
+The intake tag is a guess from the reporter's browser, so the desk does not merge on it. A report that a
+tenant rule doesn't explain (the desk notes, such as one-day moves) gets its own ticket.
+
+## Consequences
+
+- One ticket per bug: one fix closes one ticket.
+- Merging needs the tenant directory, not just the subject. The triage explorer already shows the cause.
+- Big tickets still get split when a new cause appears. Splitting is cheaper than shipping a fix and
+  leaving two bugs open under a closed ticket.
+
+<RenderStamp {signature} />
