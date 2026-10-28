@@ -41,7 +41,8 @@ Fixing the parser will not close #4471. The <code>hint</code> and <code>one-day<
 - **By tenant, not by intake tag.** The intake tag is a guess from the reporter's browser. The cause
   depends on the tenant's locale and booking form (`causes.ts`). The table shows how often the tag was wrong.
 - **By what the report says.** The one-day moves are the only reports with no swapped day and month.
-  The desk's notes flag them, and reading every report body confirms it.
+  The desk's notes flag them, and reading every report body confirms it. As in the desk's own view,
+  they stay counted under the cause they are filed in, and #3 counts them again as their own problem.
 
 The counts come from `src/lib/kb/split.ts`, which runs at render time. When the desk merges more
 reports into #4471, the table updates.

@@ -10,7 +10,11 @@
 
   const all = reports as Report[];
   const groups = $derived(splitTicket(all, ticket, tenantOf, notes.oneDayMove));
-  const total = $derived(groups.reduce((n, g) => n + g.reports.length, 0));
+  const total = $derived(groups.filter((g) => g.problem !== 'one-day').reduce((n, g) => n + g.reports.length, 0));
+  const moved = $derived(groups.find((g) => g.problem === 'one-day'));
+  const filedUnder = $derived(
+    moved ? groups.find((g) => g.problem !== 'one-day' && moved.reports.every((r) => g.reports.includes(r)))?.problem : undefined,
+  );
   const rows = $derived(rowsIn(all, ticket));
   const mistagged = (g: (typeof groups)[number]) =>
     g.problem === 'one-day' ? null : g.reports.length - (g.taggedAs[g.problem] ?? 0);
@@ -37,6 +41,11 @@
   </tbody>
 </table>
 
+{#if moved}
+  <p class="note">The {moved.reports.length} <code>one-day</code> reports are filed under <code>{filedUnder}</code> by tenant and counted there too, as in the desk's view.</p>
+{/if}
+
 <style>
   .sum { font-size: 1.1rem; }
+  .note { color: var(--muted); font-size: 0.85em; }
 </style>
